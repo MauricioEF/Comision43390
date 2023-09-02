@@ -1,0 +1,18 @@
+<h1>Hola, aquí los users</h1>
+
+{{#each users}}
+    <p>{{this.first_name}}</p>
+    <p>{{this.last_name}}</p>
+    <p>{{this.email}}</p>
+    <br/>
+{{/each}}
+
+{{#if hasPrevPage}}
+<a href="/?page={{prevPage}}"><button>Anterior</button></a>
+{{/if}}
+
+<h5>{{page}}</h5>
+
+{{#if hasNextPage}}
+<a href="/?page={{nextPage}}"><button>Siguiente</button></a>
+{{/if}}
