@@ -1,0 +1,16 @@
+PROGRAMACIÓN ESTRUCTURADA (if, else, operadores, for, while, do while, arrays, etc)
+PROGRAMACIÓN ORIENTADA A OBJETOS (objeto, clase, herencia, polimorfismo, interfaces, etc )
+ESTRUCTURAS DE DATOS Y ALGORITMOS (códigos que resuelven problemas muy específicos)
+
+* Nodos
+* Pilas
+* Colas 
+* Listas enlazadas
+* Árboles
+* Grafos
+
+
+
+* Algoritmos específicos de búsqueda
+* Algoritmos de ordenamiento
+* Algoritmos recursivos
