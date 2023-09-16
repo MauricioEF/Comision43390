@@ -10,6 +10,10 @@ router.get('/',async(req,res)=>{
     res.render('Profile',{user:req.session.user})
 })
 
+router.get('/profilejwt',async(req,res)=>{
+    res.render('ProfileJWT');
+})
+
 router.get('/register',async(req,res)=>{
     res.render('Register')
 })

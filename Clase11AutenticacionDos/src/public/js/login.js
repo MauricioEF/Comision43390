@@ -6,7 +6,7 @@ form.addEventListener('submit',async e=>{
     const data = new  FormData(form);
     const obj = {};
     data.forEach((value,key)=>obj[key]=value);
-    const response = await fetch('/api/sessions/login',{
+    const response = await fetch('/api/sessions/loginJWT',{
         method:'POST',
         body:JSON.stringify(obj),
         headers:{
@@ -15,6 +15,10 @@ form.addEventListener('submit',async e=>{
     })
     const result = await response.json();
     if(response.status===200){
-        window.location.replace('/');
+        //DESCOMENTAR SI USAS EXPRESS SESSIONS
+        // window.location.replace('/');
+        
+        //JWT
+        localStorage.setItem('accessToken',result.token)
     }
 })
