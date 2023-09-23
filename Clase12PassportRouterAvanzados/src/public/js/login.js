@@ -1,5 +1,7 @@
 const form = document.getElementById('loginForm');
 
+console.log(document.cookie);
+
 form.addEventListener('submit',async (event)=>{
     event.preventDefault();
     const data = new FormData(form);
@@ -15,7 +17,7 @@ form.addEventListener('submit',async (event)=>{
     const result = await response.json();
     console.log(result);
     if(response.status===200){
-        window.location.replace('home');
+        //window.location.replace('home');
     }
     
 })

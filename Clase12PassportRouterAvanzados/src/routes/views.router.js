@@ -1,8 +1,9 @@
 import { Router } from "express";
+import passportCall from "../middlewares/passportCall.js";
 
 const router = Router();
 
-router.get('/',(req,res)=>{
+router.get('/',passportCall('jwt'),(req,res)=>{
     res.render('Home');
 })
 

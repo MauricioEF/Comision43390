@@ -2,13 +2,16 @@ import passport from 'passport';
 import local from 'passport-local';
 import UserManager from '../dao/mongo/UserManager.js';
 import auth from '../service/auth.js';
+import { Strategy, ExtractJwt } from 'passport-jwt';
+
+import { cookieExtractor } from '../utils.js';
 
 const usersService = new UserManager();
 const LocalStrategy = local.Strategy;
 
 const initializePassportStrategies = () =>{
 
-    passport.use('register',new LocalStrategy({passReqToCallback:true,usernameField:'email'},async(req,email,password,done)=>{
+    passport.use('register',new LocalStrategy({passReqToCallback:true,usernameField:'email',session:false},async(req,email,password,done)=>{
         const {firstName, lastName} = req.body;
         //Validamos que venga con nombre
         if(!firstName||!lastName) return done(null,false,{message:'Incomplete values'});
@@ -29,7 +32,7 @@ const initializePassportStrategies = () =>{
         done(null,result);
     }));
 
-    passport.use('login', new LocalStrategy({usernameField:'email'},async(email,password,done)=>{
+    passport.use('login', new LocalStrategy({usernameField:'email', session:false},async(email,password,done)=>{
         //Contrario al registro, aquí sí nos interesa que el usuario exista.
         const user = await usersService.getBy({email});
         if(!user) return done(null,false,{message:'Incorrect Credentials'});
@@ -42,6 +45,14 @@ const initializePassportStrategies = () =>{
         if(!isValidPassword) return done(null,false,{message:'Incorrect Credentials'});
         done(null,user);
     }));
+
+    passport.use('jwt',new Strategy({
+        jwtFromRequest:ExtractJwt.fromExtractors([cookieExtractor]),
+        secretOrKey:'jwtSecret'
+    },async(payload, done)=>{
+        return done(null,payload)
+    }))
+
 }
 
 export default initializePassportStrategies;
