@@ -6,13 +6,16 @@ import mongoose from 'mongoose';
 
 import viewsRouter from './routes/views.router.js'
 import sessionsRouter from './routes/sessions.router.js';
+import dictionaryRouter from './routes/dictionary.router.js';
+import petsRouter from './routes/pet.router.js';
+import ultimateSessionsRouter from './routes/SessionsRouter.js';
 
 import initializePassportStrategies from './config/passport.config.js';
 import __dirname from './utils.js';
 
 const app = express();
 const PORT = process.env.PORT||8080;
-const connection = mongoose.connect("mongodb+srv://coderUser:123@cluster0.cp6cenm.mongodb.net/?retryWrites=true&w=majority")
+const connection = mongoose.connect("MONGO URL")
 
 app.engine('handlebars',Handlebars.engine());
 app.set('views',`${__dirname}/views`);
@@ -23,7 +26,9 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.use('/',viewsRouter);
-app.use('/api/sessions',sessionsRouter);
+app.use('/api/sessions',ultimateSessionsRouter);
+app.use('/api/dictionary',dictionaryRouter);
+app.use('/api/pets',petsRouter);
 
 initializePassportStrategies()
 
