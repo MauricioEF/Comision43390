@@ -6,9 +6,11 @@ import cookieParser from 'cookie-parser';
 import videogamesRouter from './routes/videogames.router.js';
 import viewsRouter from './routes/views.router.js';
 import librariesRouter from './routes/libraries.router.js';
+import SessionsRouter from './routes/SessionsRouter.js';
 
 import librarySetter from './middlewares/librarySetter.js';
 import __dirname from './utils.js';
+import initializePassportStrategies from './config/passport.config.js';
 
 const app = express();
 
@@ -28,7 +30,9 @@ app.use(express.urlencoded({extended:true}))
 app.use(cookieParser());
 app.use(librarySetter);
 
+initializePassportStrategies();
 
 app.use('/',viewsRouter);
 app.use('/api/videogames',videogamesRouter);
 app.use('/api/libraries',librariesRouter);
+app.use('/api/sessions',SessionsRouter);
