@@ -16,7 +16,7 @@ const PORT = process.env.PORT||8080;
 
 const server = app.listen(PORT,()=>console.log(`Listening on ${PORT}`))
 
-const connection = mongoose.connect("MONGO_URL");
+const connection = mongoose.connect("mongodb+srv://coderUser:123@cluster0.cp6cenm.mongodb.net/CoderGaming?retryWrites=true&w=majority");
 
 app.engine('handlebars',Handlebars.engine());
 app.set('views',`${__dirname}/views`);
