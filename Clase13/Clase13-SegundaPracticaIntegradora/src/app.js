@@ -10,15 +10,16 @@ import SessionsRouter from './routes/SessionsRouter.js';
 
 import librarySetter from './middlewares/librarySetter.js';
 import __dirname from './utils.js';
+import config from './config/config.js';
 import initializePassportStrategies from './config/passport.config.js';
+
 
 const app = express();
 
-const PORT = process.env.PORT||8080;
+const PORT = config.app.PORT;
 
 const server = app.listen(PORT,()=>console.log(`Listening on ${PORT}`))
-
-const connection = mongoose.connect("mongodb+srv://coderUser:123@cluster0.cp6cenm.mongodb.net/CoderGaming?retryWrites=true&w=majority");
+const connection = mongoose.connect(config.mongo.URL);
 
 app.engine('handlebars',Handlebars.engine());
 app.set('views',`${__dirname}/views`);

@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import passportCall from "../middlewares/passportCall.js";
 import BaseRouter from "./BaseRouter.js";
-
+import config from '../config/config.js';
 
 class SessionsRouter extends BaseRouter {
     init(){
@@ -14,8 +14,8 @@ class SessionsRouter extends BaseRouter {
                 id:req.user._id,
                 role: req.user.role
             }
-            const token = jwt.sign(tokenizedUser,'jwtSecret',{expiresIn:'1d'});
-            res.cookie('authCookie',token);
+            const token = jwt.sign(tokenizedUser,config.jwt.SECRET,{expiresIn:'1d'});
+            res.cookie(config.jwt.COOKIE,token);
             res.sendSuccess('Logged In');
         })
         this.get('/current',['AUTH'],async(req,res)=>{
