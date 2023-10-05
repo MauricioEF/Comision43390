@@ -6,16 +6,19 @@ import config from '../config/config.js';
 class SessionsRouter extends BaseRouter {
     init(){
         this.post('/register',['NO_AUTH'],passportCall('register',{strategyType:'LOCALS'}),async(req,res)=>{
+            res.clearCookie('library');
             res.sendSuccess('Registered');
         })
         this.post('/login',['NO_AUTH'],passportCall('login',{strategyType:'LOCALS'}),async(req,res)=>{
             const tokenizedUser = {
                 name: `${req.user.firstName} ${req.user.lastName}`,
                 id:req.user._id,
-                role: req.user.role
+                role: req.user.role,
+                library:req.user.library
             }
             const token = jwt.sign(tokenizedUser,config.jwt.SECRET,{expiresIn:'1d'});
             res.cookie(config.jwt.COOKIE,token);
+            res.clearCookie('library');
             res.sendSuccess('Logged In');
         })
         this.get('/current',['AUTH'],async(req,res)=>{

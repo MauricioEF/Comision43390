@@ -3,9 +3,12 @@ import { Strategy as LocalStrategy } from "passport-local";
 import { Strategy as JWTStrategy, ExtractJwt} from "passport-jwt";
 
 import UsersManager from "../dao/mongo/managers/UsersManager.js";
+import LibrariesManager from "../dao/mongo/managers/LibrariesManager.js";
 import authService from "../services/authService.js";
+import config from "./config.js";
 
 const usersService = new UsersManager();
+const librariesService = new LibrariesManager();
 
 const initializePassportStrategies = () =>{
 
@@ -26,6 +29,18 @@ const initializePassportStrategies = () =>{
             email,
             password:hashedPassword
         }
+
+        //Revisar la librería temporal
+        let library;
+
+        if(req.cookies['library']){//Obtener la que ya está de la cookie
+            library = req.cookies['library'];
+        }else{ //Crear una nueva librería en la base de datos
+            libraryResult = await librariesService.createLibrary();
+            library = libraryResult._id
+        }
+        newUser.library = library;
+
         const result = await usersService.createUser(newUser);
         return done(null,result);
       } catch (error) {
@@ -36,7 +51,7 @@ const initializePassportStrategies = () =>{
     
     passport.use('login', new LocalStrategy({usernameField:'email', session:false}, async(email,password,done)=>{
         try{
-            if(email==="correoadmin@correo.com"&&password==="123"){
+            if(email===config.app.ADMIN_EMAIL&&password===config.app.ADMIN_PASSWORD){
                 const adminUser = {
                     role:'admin',
                     id:'0',

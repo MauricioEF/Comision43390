@@ -1,6 +1,7 @@
 import { Router } from "express";
 import passportCall from "../middlewares/passportCall.js";
 import executePolicies from "../middlewares/executePolicies.js";
+import librarySetter from '../middlewares/librarySetter.js';
 
 export default class BaseRouter {
     constructor(){
@@ -15,16 +16,16 @@ export default class BaseRouter {
     }
 
     get(path,policies,...callbacks){
-        this.router.get(path,this.generateCustomResponses,passportCall('jwt',{strategyType:'JWT'}),executePolicies(policies),this.applyCallbacks(callbacks))
+        this.router.get(path,this.generateCustomResponses,passportCall('jwt',{strategyType:'JWT'}),librarySetter,executePolicies(policies),this.applyCallbacks(callbacks))
     }
     post(path,policies,...callbacks){
-        this.router.post(path,this.generateCustomResponses,passportCall('jwt',{strategyType:'JWT'}),executePolicies(policies),this.applyCallbacks(callbacks))
+        this.router.post(path,this.generateCustomResponses,passportCall('jwt',{strategyType:'JWT'}),librarySetter,executePolicies(policies),this.applyCallbacks(callbacks))
     }
     put(path,policies,...callbacks){
-        this.router.put(path,this.generateCustomResponses,passportCall('jwt',{strategyType:'JWT'}),executePolicies(policies),this.applyCallbacks(callbacks))
+        this.router.put(path,this.generateCustomResponses,passportCall('jwt',{strategyType:'JWT'}),librarySetter,executePolicies(policies),this.applyCallbacks(callbacks))
     }
     delete(path,policies,...callbacks){
-        this.router.delete(path,this.generateCustomResponses,passportCall('jwt',{strategyType:'JWT'}),executePolicies(policies),this.applyCallbacks(callbacks))
+        this.router.delete(path,this.generateCustomResponses,passportCall('jwt',{strategyType:'JWT'}),librarySetter,executePolicies(policies),this.applyCallbacks(callbacks))
     }
 
     generateCustomResponses(req,res,next){
