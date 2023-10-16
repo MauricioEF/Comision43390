@@ -21,6 +21,21 @@ class SessionsRouter extends BaseRouter {
             res.clearCookie('library');
             res.sendSuccess('Logged In');
         })
+
+        this.get('/google',['NO_AUTH'],passportCall('google',{scope:['profile','email'],strategyType:'OAUTH'}),async (req,res)=>{})
+        this.get('/googlecallback', ['NO_AUTH'],passportCall('google',{strategyType:'OAUTH'}),async (req,res)=>{
+            const tokenizedUser = {
+                name: `${req.user.firstName} ${req.user.lastName}`,
+                id:req.user._id,
+                role: req.user.role,
+                library:req.user.library
+            }
+            const token = jwt.sign(tokenizedUser,config.jwt.SECRET,{expiresIn:'1d'});
+            res.cookie(config.jwt.COOKIE,token);
+            res.clearCookie('library');
+            res.sendSuccess('Logged In');
+        })
+
         this.get('/current',['AUTH'],async(req,res)=>{
             console.log(req.user);
             res.sendSuccessWithPayload(req.user);

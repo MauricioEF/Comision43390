@@ -16,6 +16,16 @@ const createToy = async(req,res)=>{
     }
     //Insertar un dato, también es algo que debo solicitar
     const result = await toysService.createToy(newToy);
+
+
+    //Ahora Insertamos en PostgreSQL
+    //
+    //
+    //
+    //
+    //
+    //
+    
     res.send({status:"success",payload:result});
 }
 

@@ -1,6 +1,6 @@
 import fs from 'fs';
 
-export default class ToysManager {
+export default class ToysDao {
     constructor() {
         this.path = `./src/dao/FS/files/toys.json`;
         this.init();

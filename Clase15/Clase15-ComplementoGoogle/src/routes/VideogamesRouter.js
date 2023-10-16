@@ -1,6 +1,7 @@
 import BaseRouter from './BaseRouter.js';
 import VideoGamesManager from "../dao/mongo/managers/VideogamesManager.js";
 import uploader from "../services/uploadService.js";
+import CloudStorageService from '../services/CloudStorageService.js';
 
 const videogamesService = new VideoGamesManager();
 
@@ -10,7 +11,7 @@ class VideogamesRouter extends BaseRouter {
             const videogames = await videogamesService.getVideogames();
             res.send({status:"success",payload:videogames})
         })
-        this.post('/',['ADMIN'],uploader.array('images'),async(req,res)=>{
+        this.post('/',['PUBLIC'],uploader.array('images'),async(req,res)=>{
             const {
                 title,
                 description,
@@ -27,10 +28,20 @@ class VideogamesRouter extends BaseRouter {
                 price,
                 categories
             }
-            const images = req.files.map(file=>`${req.protocol}://${req.hostname}:${process.env.PORT||8080}/img/${file.filename}`);
-            newVideogame.images = images
+
+            const googleStorageService = new CloudStorageService();
+            const images = [];
+
+            for(const file of req.files){
+                const url = await googleStorageService.uploadFileToCloudStorage(file);
+                images.push(url);
+            }
+
+            console.log(images);
+
+            newVideogame.images = images;
             //Ya creé el objeto, ya mapeé las imágenes, ahora sí, inserto en la base
-            const result = await videogamesService.createVideogame(newVideogame);
+             const result = await videogamesService.createVideogame(newVideogame);
             res.send({status:"success",payload:result._id});
         })
         this.put('/:vid',['ADMIN'],async (req,res)=>{

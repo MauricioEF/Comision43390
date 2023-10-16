@@ -1,5 +1,5 @@
 
-export default class ToysManager {
+export default class ToysDao {
     constructor(){
         this.toys = [];
     }

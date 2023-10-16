@@ -1,6 +1,9 @@
-import ToysService from "./ToysService.js";
+import ToysRepository from "./repositories/ToysRepository.js";
 
-import ToysManager from "../dao/Mongo/ToysManager.js";
+import PersistenceFactory from "../dao/PersistenceFactory.js";
 
 
-export const toysService = new ToysService(new ToysManager());
+const {ToysDao} =  await PersistenceFactory.getPersistence();
+
+
+export const toysService = new ToysRepository(new ToysDao());

@@ -1,6 +1,7 @@
 import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
 import { Strategy as JWTStrategy, ExtractJwt} from "passport-jwt";
+import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 
 import UsersManager from "../dao/mongo/managers/UsersManager.js";
 import LibrariesManager from "../dao/mongo/managers/LibrariesManager.js";
@@ -71,6 +72,38 @@ const initializePassportStrategies = () =>{
             return done(error);
         }
     }));
+
+    passport.use('google',new GoogleStrategy({
+        clientID:'client',
+        clientSecret:'SECRET',
+        callbackURL:'http://localhost:8080/api/sessions/googlecallback',
+        passReqToCallback:true
+    },async (req,accessToken,refreshToken,profile,done)=>{
+        const {_json} = profile;
+        const user = await usersService.getUserBy({email:_json.email});
+        if(user) {
+            return done(null, user);
+        }else{
+            const newUser = {
+                firstName:_json.given_name,
+                lastName:_json.family_name,
+                email:_json.email
+            }
+            let library;
+
+            if(req.cookies['library']){//Obtener la que ya está de la cookie
+                library = req.cookies['library'];
+            }else{ //Crear una nueva librería en la base de datos
+                libraryResult = await librariesService.createLibrary();
+                library = libraryResult._id
+            }
+            newUser.library = library;
+
+            const result = await  usersService.createUser(newUser);
+            done(null,result);
+        }
+    }))
+
 
     passport.use('jwt', new JWTStrategy({
         jwtFromRequest:ExtractJwt.fromExtractors([authService.extractAuthToken]),
