@@ -1,12 +1,14 @@
 import { Storage } from "@google-cloud/storage";
+
 import __dirname from "../utils.js";
+import config from "../config/config.js";
 
 export default class CloudStorageService {
     constructor(){
         this.storage = new Storage({
-            keyFilename:`${__dirname}/../codergaming-key.json`
+            keyFilename:`${__dirname}/../${config.google.KEY_FILE}`
         })
-        this.bucket = 'codergaming-bucket';
+        this.bucket =  config.google.BUCKET_NAME;
     }
 
     uploadFileToCloudStorage = (file) =>{
@@ -21,7 +23,6 @@ export default class CloudStorageService {
             })
             blobStream.on('finish',()=>{
                 //Si llegaste hasta aquí, ya se escribió en el bucket
-                console.log("Terminé");
                 const publicURL = `https://storage.googleapis.com/${this.bucket}/${blob.name}`
                 console.log(publicURL);
                 resolve(publicURL);

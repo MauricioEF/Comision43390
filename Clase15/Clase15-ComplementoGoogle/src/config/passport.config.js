@@ -74,8 +74,8 @@ const initializePassportStrategies = () =>{
     }));
 
     passport.use('google',new GoogleStrategy({
-        clientID:'client',
-        clientSecret:'SECRET',
+        clientID:config.google.CLIENT,
+        clientSecret:config.google.SECRET,
         callbackURL:'http://localhost:8080/api/sessions/googlecallback',
         passReqToCallback:true
     },async (req,accessToken,refreshToken,profile,done)=>{
