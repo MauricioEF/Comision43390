@@ -1,7 +1,7 @@
 
 
-const GMAIL_USER = "ing.mauricioespinosa.tutorias@gmail.com";
-const GMAIL_PASSWORD = "yuac jmjt sfvy esga";
+const GMAIL_USER = "EMAIL MAILER";
+const GMAIL_PASSWORD = "PASSWORD MAILER";
 
 export default class MailingService {
 

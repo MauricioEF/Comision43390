@@ -5,8 +5,8 @@ import twilio from 'twilio';
 
 const app = express();
 
-const TWILIO_SID = "ACebd244499b1fbecddb5fbdae2c9e5119";
-const TWILIO_TOKEN = "84be794f30fc46b1dd11fb7efb1d56e3";
+const TWILIO_SID = "ID";
+const TWILIO_TOKEN = "TOKEN";
 const TWILIO_TEST_NUMBER="+16502000568";
 
 const twilioClient = twilio(TWILIO_SID,TWILIO_TOKEN);
