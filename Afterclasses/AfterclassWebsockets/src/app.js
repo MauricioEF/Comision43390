@@ -2,15 +2,18 @@ import express from 'express';
 import mongoose from 'mongoose';
 import Handlebars from 'express-handlebars';
 import cookieParser from 'cookie-parser';
+import { Server } from 'socket.io';
 
 import videogamesRouter from './routes/VideogamesRouter.js';
 import viewsRouter from './routes/ViewsRouter.js';
 import librariesRouter from './routes/LibrariesRouter.js';
 import SessionsRouter from './routes/SessionsRouter.js';
+import MessagesRouter from './routes/MessagesRouter.js';
 
 import __dirname from './utils.js';
 import config from './config/config.js';
 import initializePassportStrategies from './config/passport.config.js';
+import registerChatHandler from './listeners/chat.listener.js';
 
 
 const app = express();
@@ -35,3 +38,11 @@ app.use('/',viewsRouter);
 app.use('/api/videogames',videogamesRouter);
 app.use('/api/libraries',librariesRouter);
 app.use('/api/sessions',SessionsRouter);
+app.use('/api/messages',MessagesRouter);
+
+const io = new Server(server);
+
+io.on('connection', socket =>{
+    console.log(`Se conectó el socket ${socket.id}`)
+    registerChatHandler(io,socket);
+})
