@@ -1,0 +1,16 @@
+{
+  "name": "operacionescalculadorosas",
+  "version": "1.1.0",
+  "description": "es un paquete bonito para hacer operaciones bonitas",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "papaconqueso": "^1.0.1"
+  }
+}
