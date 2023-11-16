@@ -21,8 +21,8 @@ spec:
           - containerPort: 8080
         env:
         - name: MONGO_URL
-          value: "mongodb+srv://coderUser:123@cluster0.cp6cenm.mongodb.net/CoderGaming?retryWrites=true&w=majority"
+          value: "BASE"
         - name: GOOGLE_CLIENT
-          value: "803832661949-dm6aaq48vlaioc59kmggviv60pedt6bk.apps.googleusercontent.com"
+          value: "CLIENT"
         - name: GOOGLE_SECRET
-          value: "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"
+          value: "SECRET"
