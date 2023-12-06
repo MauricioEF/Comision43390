@@ -11,8 +11,8 @@ class ViewsRouter extends BaseRouter {
         this.get('/videogames/:vid',['PUBLIC'],viewsController.videogameDetails);
         this.get('/password-restore',['PUBLIC'],viewsController.passwordRestore);
         this.get('/library',['USER'],viewsController.library);
-        this.get('/premiumupgrade',['USER'],viewsController.premiumUpgrade);
-        this.get('/videogame-creator',['ADMIN'],viewsController.videogameCreator);
+        this.get('/premium-upgrade',['USER'],viewsController.premiumUpgrade);
+        this.get('/videogame-creator',['ADMIN','PREMIUM'],viewsController.videogameCreator);
     }
 }
 

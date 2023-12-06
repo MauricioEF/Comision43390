@@ -14,6 +14,10 @@ const schema = new mongoose.Schema({
     library: {
         type:mongoose.SchemaTypes.ObjectId,
         ref:'Libraries'
+    },
+    membership:{
+        type:mongoose.SchemaTypes.ObjectId,
+        ref:'Memberships'
     }
 })
 

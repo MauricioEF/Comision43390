@@ -23,7 +23,9 @@ const schema = new mongoose.Schema({
     images: {
         type:Array,
         default:[]
-    }
+    },
+    owner:String
+    
 },{timestamps:true})
 
 schema.plugin(MongoosePaginate);

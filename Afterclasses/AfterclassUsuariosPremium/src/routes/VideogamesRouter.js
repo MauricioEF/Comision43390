@@ -5,7 +5,7 @@ import BaseRouter from './BaseRouter.js';
 class VideogamesRouter extends BaseRouter {
     init(){
         this.get('/',['PUBLIC'], videogamesController.getVideogames)
-        this.post('/',['ADMIN'],uploader.array('images'),videogamesController.createVideogame)
+        this.post('/',['ADMIN','PREMIUM'],uploader.array('images'),videogamesController.createVideogame)
         this.put('/:vid',['ADMIN'], videogamesController.updateVideogame)
         this.delete('/:vid',['ADMIN'],videogamesController.deleteVideogame)
     }

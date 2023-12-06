@@ -1,5 +1,5 @@
 import CloudStorageService from '../services/CloudStorageService.js';
-import { videogamesService } from "../services/repositories.js";
+import { usersService, videogamesService } from "../services/repositories.js";
 
 const getVideogames = async(req,res)=>{
     const videogames = await videogamesService.getVideogames();
@@ -32,9 +32,14 @@ const createVideogame = async(req,res)=>{
         images.push(url);
     }
 
-    console.log(images);
-
     newVideogame.images = images;
+
+    if(req.user.role==="premium"){//Lo está creando un usuario
+        const user = await usersService.getUserBy({_id:req.user.id});
+        newVideogame.owner = user.email
+    }else{
+        newVideogame.owner = "admin"
+    }
     //Ya creé el objeto, ya mapeé las imágenes, ahora sí, inserto en la base
      const result = await videogamesService.createVideogame(newVideogame);
      console.log(result);

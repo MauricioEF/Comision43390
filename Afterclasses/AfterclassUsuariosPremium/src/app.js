@@ -11,6 +11,7 @@ import viewsRouter from './routes/ViewsRouter.js';
 import librariesRouter from './routes/LibrariesRouter.js';
 import SessionsRouter from './routes/SessionsRouter.js';
 import MessagesRouter from './routes/MessagesRouter.js';
+import UsersRouter from './routes/UsersRouter.js';
 
 import __dirname from './utils.js';
 import config from './config/config.js';
@@ -55,6 +56,7 @@ app.use('/api/videogames',videogamesRouter);
 app.use('/api/libraries',librariesRouter);
 app.use('/api/sessions',SessionsRouter);
 app.use('/api/messages',MessagesRouter);
+app.use('/api/users',UsersRouter);
 
 const io = new Server(server);
 
